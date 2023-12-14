@@ -12,7 +12,8 @@ import java.time.LocalDateTime;
 public class Post {
 
     @Id
-    @Column(name = "id", nullable = false)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
     private int id;
 
     @Column(name = "title")
@@ -21,7 +22,6 @@ public class Post {
     @Column(name = "content")
     private String content;
 
-    //should maybe be a enum
     @Column(name = "visibility", nullable = false)
     @Enumerated(EnumType.STRING)
     private Visibility visibility;
@@ -32,10 +32,14 @@ public class Post {
     @Column(name = "updated_at")
     private LocalDateTime updatedAt;
 
-    @Column(name = "user_id", nullable = false)
     @ManyToOne
     private User user;
 
+    public Post(String title, String content, Visibility visibility) {
+        this.title = title;
+        this.content = content;
+        this.visibility = visibility;
+    }
 
     public Post(String title, String content, Visibility visibility, User user) {
         this.title = title;
@@ -66,8 +70,8 @@ public class Post {
     }
 
     public void removeUser() {
-        this.user = null;
         user.removePost(this);
+        this.user = null;
     }
 
     public void setTitle(String title) {

@@ -41,7 +41,8 @@ public class PostController {
             }
 
             List<PostDTO> postDtos = PostDTO.convertToDto(posts);
-
+            LOGGER.info(postDtos.toString());
+            LOGGER.info("test");
             ctx.status(200);
             ctx.json(postDtos);
         };

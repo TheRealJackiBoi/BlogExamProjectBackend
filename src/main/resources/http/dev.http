@@ -1,0 +1,7 @@
+### GET jslam public posts
+GET {{url}}/posts/
+authorization: Bearer {{token}}
+
+### GET jslam post
+GET {{url}}/posts/1
+authorization: Bearer {{token}}

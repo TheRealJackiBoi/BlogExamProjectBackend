@@ -13,12 +13,12 @@ public class PostRoutes {
     public EndpointGroup getRoutes() {
         return () -> {
              path("/posts", () -> {
-                 get("/", ctx -> postController.getAllPublicPosts(), RouteRoles.USER, RouteRoles.ADMIN, RouteRoles.MANAGER);
-                 post("/", ctx -> postController.createPost(), RouteRoles.USER, RouteRoles.ADMIN, RouteRoles.MANAGER);
-                 path("/:id", () -> {
-                     get("/", ctx -> postController.getPostById(), RouteRoles.USER, RouteRoles.ADMIN, RouteRoles.MANAGER);
-                     delete("/", ctx -> postController.deletePostById(), RouteRoles.USER, RouteRoles.ADMIN, RouteRoles.MANAGER);
-                     put("/", ctx -> postController.updatePostById(), RouteRoles.USER, RouteRoles.ADMIN, RouteRoles.MANAGER);
+                 get("/", postController.getAllPublicPosts(), RouteRoles.USER, RouteRoles.ADMIN, RouteRoles.MANAGER);
+                 post("/", postController.createPost(), RouteRoles.USER, RouteRoles.ADMIN, RouteRoles.MANAGER);
+                 path("/{id}", () -> {
+                     get("/", postController.getPostById(), RouteRoles.USER, RouteRoles.ADMIN, RouteRoles.MANAGER);
+                     delete("/", postController.deletePostById(), RouteRoles.USER, RouteRoles.ADMIN, RouteRoles.MANAGER);
+                     put("/", postController.updatePostById(), RouteRoles.USER, RouteRoles.ADMIN, RouteRoles.MANAGER);
                  });
              });
         };

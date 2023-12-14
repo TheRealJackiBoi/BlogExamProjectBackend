@@ -37,7 +37,7 @@ public class PostDTO {
                 post.getContent(),
                 post.getVisibility().toString(),
                 post.getCreatedAt().toString(),
-                post.getUpdatedAt().toString(),
+                post.getUpdatedAt() != null ? post.getUpdatedAt().toString() : null,
                 post.getUser().getUsername()
         );
     }

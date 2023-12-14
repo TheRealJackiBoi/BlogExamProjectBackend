@@ -1,7 +1,9 @@
 package dat3.config;
 
+import dat3.model.Post;
 import dat3.model.Role;
 import dat3.model.User;
+import dat3.model.Visibility;
 import jakarta.persistence.EntityManagerFactory;
 import lombok.NoArgsConstructor;
 import org.hibernate.SessionFactory;
@@ -97,6 +99,8 @@ public class HibernateConfig {
     private static void getAnnotationConfiguration(Configuration configuration) {
         configuration.addAnnotatedClass(User.class);
         configuration.addAnnotatedClass(Role.class);
+        configuration.addAnnotatedClass(Post.class);
+        configuration.addAnnotatedClass(Visibility.class);
     }
 
     private static EntityManagerFactory getEntityManagerFactoryConfigDev() {
