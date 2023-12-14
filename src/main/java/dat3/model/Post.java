@@ -23,7 +23,7 @@ public class Post {
     //should maybe be a enum
     @Column(name = "visibility", nullable = false)
     @Enumerated(EnumType.STRING)
-    private String visibility;
+    private Visibility visibility;
 
     @Column(name = "created_at", nullable = false)
     private LocalDateTime createdAt;
@@ -36,7 +36,7 @@ public class Post {
     private User user;
 
 
-    public Post(String title, String content, String visibility, User user) {
+    public Post(String title, String content, Visibility visibility, User user) {
         this.title = title;
         this.content = content;
         this.visibility = visibility;
