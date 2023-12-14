@@ -35,6 +35,9 @@ public class User implements Serializable {
     @ManyToMany(fetch = FetchType.EAGER)
     private Set<Role> roleList = new LinkedHashSet<>();
 
+    @OneToMany(mappedBy = "user", cascade = CascadeType.PERSIST)
+    private Set<Post> posts = new LinkedHashSet<>();
+
     public User(String username, String userPassword) {
         this.username = username;
         this.userPassword = BCrypt.hashpw(userPassword, BCrypt.gensalt());
@@ -66,4 +69,11 @@ public class User implements Serializable {
         roleList.add(userRole);
     }
 
+    public void addPost(Post post) {
+        posts.add(post);
+    }
+
+    public void removePost(Post post) {
+        posts.remove(post);
+    }
 }

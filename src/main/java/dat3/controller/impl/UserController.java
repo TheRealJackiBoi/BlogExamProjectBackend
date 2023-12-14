@@ -11,6 +11,7 @@ import dat3.security.TokenFactory;
 import io.javalin.http.Context;
 import jakarta.persistence.EntityManagerFactory;
 
+import java.util.List;
 import java.util.Set;
 
 public class UserController {
@@ -21,6 +22,17 @@ public class UserController {
     public UserController() {
         EntityManagerFactory emf = HibernateConfig.getEntityManagerFactory();
         userDao = UserDao.getInstance(emf);
+    }
+
+
+    public void getAllUsernames(Context ctx) throws ApiException {
+        List<String> usernames = userDao.getAllUsernames();
+        if (usernames.isEmpty()) {
+            ctx.status(204);
+            throw new ApiException(404, "No users found");
+        }
+        ctx.status(200);
+        ctx.json(usernames);
     }
 
     public void login(Context ctx) throws ApiException, AuthorizationException {
@@ -63,4 +75,6 @@ public class UserController {
     private String getToken(String username, Set<String> userRoles) throws ApiException {
         return tokenFactory.createToken(username, userRoles);
     }
+
+
 }
