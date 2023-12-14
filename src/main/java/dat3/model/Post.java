@@ -1,4 +1,5 @@
 package dat3.model;
+import dat3.dto.PostDTO;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -43,6 +44,12 @@ public class Post {
         this.user = user;
     }
 
+    public Post(PostDTO postDto) {
+        this.title = postDto.getTitle();
+        this.content = postDto.getContent();
+        this.visibility = Visibility.valueOf(postDto.getVisibility());
+    }
+
     @PrePersist
     public void prePersist() {
         createdAt = LocalDateTime.now();
@@ -53,4 +60,25 @@ public class Post {
         updatedAt = LocalDateTime.now();
     }
 
+    public void setUser(User user) {
+        this.user = user;
+        user.addPost(this);
+    }
+
+    public void removeUser() {
+        this.user = null;
+        user.removePost(this);
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public void setContent(String content) {
+        this.content = content;
+    }
+
+    public void setVisibility(Visibility visibility) {
+        this.visibility = visibility;
+    }
 }
