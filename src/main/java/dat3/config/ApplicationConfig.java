@@ -25,6 +25,13 @@ public class ApplicationConfig {
         config.http.defaultContentType = "application/json"; // default content type for requests
         config.plugins.register(new RouteOverviewPlugin("/", RouteRoles.ANYONE)); // enables route overview at /
         config.accessManager(ACCESS_MANAGER_HANDLER::accessManagerHandler);
+        config.plugins.enableCors(cors -> {
+            cors.add(it -> {
+                it.allowHost("http://localhost:3000");
+                it.allowCredentials = true;
+                it.exposeHeader("*");
+            });
+        });
     }
 
     public static void startServer(Javalin app, int port) {
