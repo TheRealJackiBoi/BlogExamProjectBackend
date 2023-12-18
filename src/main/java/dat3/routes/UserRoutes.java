@@ -14,7 +14,10 @@ public class UserRoutes {
         return () -> {
             path("/auth", () -> {
                 post("/login", userController::login, RouteRoles.ANYONE);
-                post("/register", userController::register, RouteRoles.ANYONE);
+                post("/register", userController::registerUser, RouteRoles.ANYONE);
+                path("/admin", () -> {
+                    post("/register", userController::register, RouteRoles.ADMIN, RouteRoles.MANAGER);
+                });
             });
             path("/users", () -> {
                 get("/", userController::getAllUsernames, RouteRoles.USER, RouteRoles.ADMIN, RouteRoles.MANAGER);
