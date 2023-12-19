@@ -29,14 +29,14 @@ We mostly use generic crud operations in our DAO classes. This is to avoid havin
 
 ### Generic read all
 ```Java
-public List<T> readAll(Class<T> tClass){
-try(EntityManager em = emf.createEntityManager()){
-return em.createQuery("SELECT t FROM " + tClass.getSimpleName() + " t", tClass).getResultList();
-} catch (Exception e){
-e.printStackTrace();
-return null;
-}
-}
+    public List<T> readAll(Class<T> tClass){
+        try(EntityManager em = emf.createEntityManager()){
+            return em.createQuery("SELECT t FROM " + tClass.getSimpleName() + " t", tClass).getResultList();
+        } catch (Exception e){
+            e.printStackTrace();
+            return null;
+        }
+    }
 ```
 
 ### Generic create
@@ -88,7 +88,6 @@ return null;
 ### Read all public posts
 ```java
     public List<Post> getAllPublicPosts() {
-
         try (EntityManager em = getEmf().createEntityManager()) {
             em.getTransaction().begin();
             List<Post> posts = em.createQuery("SELECT p FROM Post p WHERE p.visibility = PUBLIC", Post.class).getResultList();
