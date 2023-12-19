@@ -1,4 +1,4 @@
-### Backend for Blogged 
+# Backend for Blogged 
 [Blogged frontend](https://github.com/TheRealJackiBoi/BlogExamProject)
 
 ## Description
@@ -14,7 +14,7 @@ This is the backend for our Blogged project. It is a REST API that uses JPA to c
 ## CRUD Operationer
 We mostly use generic crud operations in our DAO classes. This is to avoid having to write the same code over and over again. We have a generic DAO class that we extend from in our DAO classes. This class contains the generic crud operations.
 
-# Generic create
+### Generic create
 ```Java
     public T read(Class<T> tClass, D d){
         try(EntityManager em = emf.createEntityManager()){
@@ -27,7 +27,7 @@ We mostly use generic crud operations in our DAO classes. This is to avoid havin
         }
 ```
 
-# Generic read all
+### Generic read all
 ```Java
 public List<T> readAll(Class<T> tClass){
 try(EntityManager em = emf.createEntityManager()){
@@ -39,7 +39,7 @@ return null;
 }
 ```
 
-# Generic create
+### Generic create
 ```Java
     //creates a T object
     public T create(T t){
@@ -55,7 +55,7 @@ return null;
     }
 ```
 
-# Generic update
+### Generic update
 ```Java
     //updates a T object
     public T update(T t){
@@ -71,7 +71,7 @@ return null;
     }
 ```
 
-# Generic delete
+### Generic delete
 ```Java
     public void delete(Class<T> tClass, D d){
         try(EntityManager em = emf.createEntityManager()){
@@ -85,7 +85,7 @@ return null;
     }
 ```
 
-# Read all public posts
+### Read all public posts
 ```java
     public List<Post> getAllPublicPosts() {
 
