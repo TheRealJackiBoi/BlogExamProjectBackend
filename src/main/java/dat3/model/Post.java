@@ -32,6 +32,9 @@ public class Post {
     @Column(name = "updated_at")
     private LocalDateTime updatedAt;
 
+    @Column(name = "likes")
+    private int likes;
+
     @ManyToOne
     private User user;
 
@@ -84,5 +87,9 @@ public class Post {
 
     public void setVisibility(Visibility visibility) {
         this.visibility = visibility;
+    }
+
+    public void setLikes(int likes) {
+        this.likes = likes;
     }
 }
