@@ -35,7 +35,7 @@ public class User implements Serializable {
     @ManyToMany(fetch = FetchType.EAGER)
     private Set<Role> roleList = new LinkedHashSet<>();
 
-    @OneToMany(mappedBy = "user", cascade = CascadeType.PERSIST)
+    @OneToMany(mappedBy = "user", cascade = CascadeType.PERSIST,  fetch = FetchType.EAGER)
     private Set<Post> posts = new LinkedHashSet<>();
 
     public User(String username, String userPassword) {
