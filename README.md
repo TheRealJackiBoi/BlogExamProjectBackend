@@ -18,10 +18,10 @@ User routes
         - '/register' (POST) - Register a new user
 
         - '/admin'
-            - '/register' (POST) - Register a new admin user
+            - '/register' (POST) - Register a new admin user (Need admin token)
 
     - '/users'
-        - '/' (GET) - Get all usersnames
+        - '/' (GET) - Get all usernames
 ```
 
 Post routes
