@@ -6,6 +6,36 @@
 This is the backend for our Blogged project. It is a REST API that uses JPA to communicate with a PostgresSQL database. It is hosted on a Digital Ocean droplet.
 
 
+## Routes
+    
+Main route
+    - http://localhost:7070/api
+
+User routes
+    - '/auth'
+        - '/login' (POST) - Login a user
+        - '/register' (POST) - Register a new user
+
+        - '/admin'
+            - '/register' (POST) - Register a new admin user
+
+    - '/users'
+        - '/' (GET) - Get all usersnames
+
+Post routes
+    - '/posts'
+        - '/' (GET) - Get all public posts
+        - '/' (POST) - Create post
+        
+        - '/{id}'
+            - '/' (GET) - Get post by id
+            - '/' (DElETE) - Delete post by id
+            - '/' (PUT) - Update post by id
+            - '/likes' (PUT) - Like post by id
+
+
+
+
 ## Features
 
 - Create, read, update and delete users
