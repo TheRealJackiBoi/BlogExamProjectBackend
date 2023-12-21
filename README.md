@@ -12,6 +12,7 @@ Main route
     - http://localhost:7070/api
 
 User routes
+```
     - '/auth'
         - '/login' (POST) - Login a user
         - '/register' (POST) - Register a new user
@@ -21,8 +22,10 @@ User routes
 
     - '/users'
         - '/' (GET) - Get all usersnames
+```
 
 Post routes
+```
     - '/posts'
         - '/' (GET) - Get all public posts
         - '/' (POST) - Create post
@@ -32,8 +35,7 @@ Post routes
             - '/' (DElETE) - Delete post by id
             - '/' (PUT) - Update post by id
             - '/likes' (PUT) - Like post by id
-
-
+```
 
 
 ## Features
