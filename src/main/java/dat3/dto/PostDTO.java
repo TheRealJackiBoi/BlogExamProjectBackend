@@ -19,8 +19,9 @@ public class PostDTO {
     private String createdAt;
     private String updatedAt;
     private String username;
+    private int likes;
 
-    public PostDTO(int id, String title, String content, String visibility, String createdAt, String updatedAt, String username) {
+    public PostDTO(int id, String title, String content, String visibility, String createdAt, String updatedAt, String username, int likes) {
         this.id = id;
         this.title = title;
         this.content = content;
@@ -28,6 +29,7 @@ public class PostDTO {
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
         this.username = username;
+        this.likes = likes;
     }
 
     public static PostDTO convertToDto(Post post) {
@@ -38,7 +40,8 @@ public class PostDTO {
                 post.getVisibility().toString(),
                 post.getCreatedAt().toString(),
                 post.getUpdatedAt() != null ? post.getUpdatedAt().toString() : null,
-                post.getUser().getUsername()
+                post.getUser().getUsername(),
+                post.getLikes()
         );
     }
 

@@ -141,4 +141,21 @@ public class PostController {
             ctx.json(PostDTO.convertToDto(post));
         };
     }
+
+    public Handler updateLikesById() {
+        return ctx -> {
+            int id = Integer.parseInt(ctx.pathParam("id"));
+            Post post = postDao.read(Post.class, id);
+            if (post == null) {
+                ctx.status(404);
+                throw new ApiException(404, "Post not found");
+            }
+
+            post.setLikes(post.getLikes() + 1);
+            post = postDao.update(post);
+
+            ctx.status(200);
+            ctx.json(post.getLikes());
+        };
+    }
 }

@@ -19,6 +19,7 @@ public class PostRoutes {
                      get("/", postController.getPostById(), RouteRoles.USER, RouteRoles.ADMIN, RouteRoles.MANAGER);
                      delete("/", postController.deletePostById(), RouteRoles.USER, RouteRoles.ADMIN, RouteRoles.MANAGER);
                      put("/", postController.updatePostById(), RouteRoles.USER, RouteRoles.ADMIN, RouteRoles.MANAGER);
+                     put("/likes", postController.updateLikesById(), RouteRoles.USER, RouteRoles.ADMIN, RouteRoles.MANAGER);
                  });
              });
         };

@@ -19,19 +19,19 @@ public class Populate {
 
         User user1 = new User("jslam@oulund.dk", "hej1234");
         User user2 = new User("julius@lassen.dk", "hej1234");
+        User user3 = new User("bjarke@bjarke.dk", "hej1234");
 
         Role role1 = userDao.createRole("user");
         Role role2 = userDao.createRole("admin");
         Role role3 = userDao.createRole("manager");
 
-        user1.addRole(role1);
-        user1.addRole(role2);
-        user2.addRole(role1);
+        user3.addRole(role2);
 
         // Add users to database
 
         userDao.create(user1);
         userDao.create(user2);
+        userDao.create(user3);
 
         // Create posts
 
