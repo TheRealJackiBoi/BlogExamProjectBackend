@@ -26,6 +26,11 @@ public class Populate {
         Role role3 = userDao.createRole("manager");
 
         user3.addRole(role2);
+        user3.addRole(role1);
+        user2.addRole(role1);
+        user2.addRole(role2);
+        user1.addRole(role1);
+        user1.addRole(role2);
 
         // Add users to database
 

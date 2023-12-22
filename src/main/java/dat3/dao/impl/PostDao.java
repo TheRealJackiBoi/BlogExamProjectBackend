@@ -26,7 +26,9 @@ public class PostDao extends CRUDDao<Post, Integer> {
 
         try (EntityManager em = getEmf().createEntityManager()) {
             em.getTransaction().begin();
-            List<Post> posts = em.createQuery("SELECT p FROM Post p WHERE p.visibility = PUBLIC", Post.class).getResultList();
+            List<Post> posts = em.createQuery("SELECT p FROM Post p WHERE p.visibility = :visibility ORDER BY p.createdAt DESC ", Post.class)
+                    .setParameter("visibility", Visibility.PUBLIC)
+                    .getResultList();
             em.getTransaction().commit();
             return posts;
         }
