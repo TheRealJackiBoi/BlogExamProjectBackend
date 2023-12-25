@@ -21,6 +21,9 @@ public class PostRoutes {
                      put("/", postController.updatePostById(), RouteRoles.USER, RouteRoles.ADMIN, RouteRoles.MANAGER);
                      put("/likes", postController.updateLikesById(), RouteRoles.USER, RouteRoles.ADMIN, RouteRoles.MANAGER);
                  });
+                 path("/user", () -> {
+                     get("/{username}", postController.getAllPostsByUsername(), RouteRoles.USER, RouteRoles.ADMIN, RouteRoles.MANAGER);
+                 });
              });
         };
     }
