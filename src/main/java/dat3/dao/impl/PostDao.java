@@ -34,4 +34,19 @@ public class PostDao extends CRUDDao<Post, Integer> {
         }
 
     }
+
+    // Create a method getllPostsByUsername that returns a list of all posts with the specified username (FK) user_user_name
+
+    public List<Post> getAllPostsByUsername(String username) {
+
+        try (EntityManager em = getEmf().createEntityManager()) {
+            em.getTransaction().begin();
+            List<Post> posts = em.createQuery("SELECT p FROM Post p WHERE p.user.username = :username ORDER BY p.createdAt DESC ", Post.class)
+                    .setParameter("username", username)
+                    .getResultList();
+            em.getTransaction().commit();
+            return posts;
+        }
+
+    }
 }

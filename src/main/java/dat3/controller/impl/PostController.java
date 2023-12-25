@@ -158,4 +158,25 @@ public class PostController {
             ctx.json(post.getLikes());
         };
     }
+
+    public Handler getAllPostsByUsername() {
+        return ctx -> {
+            String username = ctx.pathParam("username");
+            User user = userDao.read(User.class, username);
+            if (user == null) {
+                ctx.status(404);
+                throw new ApiException(404, "User not found");
+            }
+
+            List<Post> posts = postDao.getAllPostsByUsername(username);
+            if (posts.isEmpty()) {
+                ctx.status(404);
+                throw new ApiException(404, "No posts found");
+            }
+
+            List<PostDTO> postDtos = PostDTO.convertToDto(posts);
+            ctx.status(200);
+            ctx.json(postDtos);
+        };
+    }
 }
