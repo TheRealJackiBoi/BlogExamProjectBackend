@@ -56,7 +56,7 @@ public class TokenFactory {
         return null;
     }
 
-    public String[] parseJsonObject(String jsonString, Boolean tryLogin) throws ApiException {
+    public String[] parseJsonObject(String jsonString, Boolean tryLogin, Boolean userRegister) throws ApiException {
         try {
             List<String> roles = Arrays.asList("user", "admin", "manager");
 
@@ -66,7 +66,10 @@ public class TokenFactory {
             String password = json.get("password").toString();
             String role = "";
 
-            if (!tryLogin) {
+            if (userRegister) {
+                role = "user";
+            }
+            else if (!tryLogin) {
                 role = json.get("role").toString();
                 if (!roles.contains(role)) throw new ApiException(400, "Role not valid");
             }

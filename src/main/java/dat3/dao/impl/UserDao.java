@@ -7,6 +7,8 @@ import dat3.model.User;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 
+import java.util.List;
+
 public class UserDao extends CRUDDao<User, String> {
 
     private static UserDao instance;
@@ -61,6 +63,15 @@ public class UserDao extends CRUDDao<User, String> {
             em.persist(newRole);
             em.getTransaction().commit();
             return newRole;
+        }
+    }
+
+    public List<String> getAllUsernames() {
+        try (EntityManager em = getEmf().createEntityManager()) {
+            em.getTransaction().begin();
+            List<String> usernames = em.createQuery("SELECT u.username FROM User u", String.class).getResultList();
+            em.getTransaction().commit();
+            return usernames;
         }
     }
 }

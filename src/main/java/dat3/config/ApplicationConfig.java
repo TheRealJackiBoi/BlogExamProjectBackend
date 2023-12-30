@@ -21,10 +21,17 @@ public class ApplicationConfig {
     private static final Logger LOGGER = LoggerFactory.getLogger(ApplicationConfig.class);
 
     private static void configuration(JavalinConfig config) {
-        config.routing.contextPath = "/api/v1"; // base path for all routes
+        config.routing.contextPath = "/api/"; // base path for all routes
         config.http.defaultContentType = "application/json"; // default content type for requests
         config.plugins.register(new RouteOverviewPlugin("/", RouteRoles.ANYONE)); // enables route overview at /
         config.accessManager(ACCESS_MANAGER_HANDLER::accessManagerHandler);
+        config.plugins.enableCors(cors -> {
+            cors.add(it -> {
+                it.allowHost("http://localhost:3000");
+                it.allowCredentials = true;
+                it.exposeHeader("*");
+            });
+        });
     }
 
     public static void startServer(Javalin app, int port) {

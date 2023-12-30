@@ -7,10 +7,15 @@ import dat3.dao.impl.UserDao;
 import dat3.exception.ApiException;
 import dat3.exception.AuthorizationException;
 import dat3.model.User;
+import dat3.routes.Routes;
 import dat3.security.TokenFactory;
 import io.javalin.http.Context;
 import jakarta.persistence.EntityManagerFactory;
+import org.jetbrains.annotations.NotNull;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
+import java.util.List;
 import java.util.Set;
 
 public class UserController {
@@ -18,13 +23,26 @@ public class UserController {
     private final UserDao userDao;
     private final TokenFactory tokenFactory = TokenFactory.getInstance();
 
+    private final Logger LOGGER = LoggerFactory.getLogger(Routes.class);
+
     public UserController() {
         EntityManagerFactory emf = HibernateConfig.getEntityManagerFactory();
         userDao = UserDao.getInstance(emf);
     }
 
+
+    public void getAllUsernames(Context ctx) throws ApiException {
+        List<String> usernames = userDao.getAllUsernames();
+        if (usernames.isEmpty()) {
+            ctx.status(204);
+            throw new ApiException(404, "No users found");
+        }
+        ctx.status(200);
+        ctx.json(usernames);
+    }
+
     public void login(Context ctx) throws ApiException, AuthorizationException {
-        String[] userInfos = getUserInfos(ctx, true);
+        String[] userInfos = getUserInfos(ctx, true, false);
         User user = getVerfiedOrRegisterUser(userInfos[0], userInfos[1], "", false);
         String token = getToken(userInfos[0], user.getRolesAsStrings());
 
@@ -34,7 +52,7 @@ public class UserController {
     }
 
     public void register(Context ctx) throws ApiException, AuthorizationException {
-        String[] userInfos = getUserInfos(ctx, false);
+        String[] userInfos = getUserInfos(ctx, false, false);
         User user = getVerfiedOrRegisterUser(userInfos[0], userInfos[1], userInfos[2], true);
         String token = getToken(userInfos[0], user.getRolesAsStrings());
 
@@ -51,9 +69,9 @@ public class UserController {
         return responseJson.toString();
     }
 
-    private String[] getUserInfos(Context ctx, boolean tryLogin) throws ApiException {
+    private String[] getUserInfos(Context ctx, boolean tryLogin, boolean userRegister) throws ApiException {
         String request = ctx.body();
-        return tokenFactory.parseJsonObject(request, tryLogin);
+        return tokenFactory.parseJsonObject(request, tryLogin, userRegister);
     }
 
     private User getVerfiedOrRegisterUser(String username, String password, String role, boolean isCreate) throws AuthorizationException {
@@ -62,5 +80,16 @@ public class UserController {
 
     private String getToken(String username, Set<String> userRoles) throws ApiException {
         return tokenFactory.createToken(username, userRoles);
+    }
+
+
+    public void registerUser(Context ctx) throws ApiException, AuthorizationException {
+        String[] userInfos = getUserInfos(ctx, false, true);
+        User user = getVerfiedOrRegisterUser(userInfos[0], userInfos[1], userInfos[2], true);
+        String token = getToken(userInfos[0], user.getRolesAsStrings());
+
+        // Create response
+        ctx.res().setStatus(201);
+        ctx.result(createResponse(userInfos[0], token));
     }
 }
