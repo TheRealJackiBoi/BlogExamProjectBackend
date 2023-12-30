@@ -36,4 +36,4 @@ jobs:
           context: .
           file: ./Dockerfile
           push: true
-          tags: ${{ secrets.DOCKERHUB_USERNAME }}/blogged-backend:latest
+          tags: ${{ secrets.DOCKERHUB_USERNAME }}/bloggedbackend:latest
