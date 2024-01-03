@@ -74,4 +74,18 @@ public class UserDao extends CRUDDao<User, String> {
             return usernames;
         }
     }
+
+    public List<String> searchForUsernamesTop10(String searchTerm) {
+        try (EntityManager em = getEmf().createEntityManager()) {
+            em.getTransaction().begin();
+            List<String> usernames = em.createQuery("SELECT u.username FROM User u " +
+                            "WHERE u.username LIKE :searchterm " +
+                            "ORDER BY LENGTH(u.username) - LENGTH(:searchterm) ASC", String.class)
+                    .setParameter("searchterm", "%" + searchTerm + "%")
+                    .setMaxResults(10)
+                    .getResultList();
+            em.getTransaction().commit();
+            return usernames;
+        }
+    }
 }
