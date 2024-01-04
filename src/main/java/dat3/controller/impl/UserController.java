@@ -92,4 +92,15 @@ public class UserController {
         ctx.res().setStatus(201);
         ctx.result(createResponse(userInfos[0], token));
     }
+
+    public void searchForUserTop10(Context ctx) throws ApiException {
+        String searchTerm = ctx.pathParam("searchterm");
+        List<String> usernames = userDao.searchForUsernamesTop10(searchTerm);
+        if (usernames.isEmpty()) {
+            ctx.status(204);
+            throw new ApiException(404, "No users found");
+        }
+        ctx.status(200);
+        ctx.json(usernames);
+    }
 }

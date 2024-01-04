@@ -21,6 +21,7 @@ public class UserRoutes {
             });
             path("/users", () -> {
                 get("/", userController::getAllUsernames, RouteRoles.USER, RouteRoles.ADMIN, RouteRoles.MANAGER);
+                get("/search/{searchterm}", userController::searchForUserTop10, RouteRoles.USER, RouteRoles.ADMIN, RouteRoles.ADMIN);
             });
         };
     }
