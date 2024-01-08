@@ -142,16 +142,28 @@ public class PostController {
         };
     }
 
-    public Handler updateLikesById() {
+    public Handler likeById() {
         return ctx -> {
             int id = Integer.parseInt(ctx.pathParam("id"));
+            String username = ctx.pathParam("username");
+
             Post post = postDao.read(Post.class, id);
             if (post == null) {
                 ctx.status(404);
                 throw new ApiException(404, "Post not found");
             }
 
-            post.setLikes(post.getLikes() + 1);
+            User user = userDao.read(User.class, username);
+            if (user == null) {
+                ctx.status(404);
+                throw new ApiException(404, "User not found");
+            }
+
+            boolean isSuccess = post.like(user);
+            if (!isSuccess) {
+                ctx.status(400);
+                throw new ApiException(400, "Couldn't like post");
+            }
             post = postDao.update(post);
 
             ctx.status(200);
@@ -177,6 +189,35 @@ public class PostController {
             List<PostDTO> postDtos = PostDTO.convertToDto(posts);
             ctx.status(200);
             ctx.json(postDtos);
+        };
+    }
+
+    public Handler unLikeById() {
+        return ctx -> {
+            int id = Integer.parseInt(ctx.pathParam("id"));
+            String username = ctx.pathParam("username");
+
+            Post post = postDao.read(Post.class, id);
+            if (post == null) {
+                ctx.status(404);
+                throw new ApiException(404, "Post not found");
+            }
+
+            User user = userDao.read(User.class, username);
+            if (user == null) {
+                ctx.status(404);
+                throw new ApiException(404, "User not found");
+            }
+
+            boolean isSuccess = post.unLike(user);
+            if (!isSuccess) {
+                ctx.status(400);
+                throw new ApiException(400, "Couldn't unlike post");
+            }
+            post = postDao.update(post);
+
+            ctx.status(200);
+            ctx.json(post.getLikes());
         };
     }
 }
