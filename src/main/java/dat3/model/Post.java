@@ -1,14 +1,18 @@
 package dat3.model;
 import dat3.dto.PostDTO;
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import java.time.LocalDateTime;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Table(name = "post")
 @Getter
 @NoArgsConstructor
+@AllArgsConstructor
 public class Post {
 
     @Id
@@ -34,6 +38,9 @@ public class Post {
 
     @Column(name = "likes")
     private int likes;
+
+    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    private Set<User> haveLikedUsers = new HashSet<>();
 
     @ManyToOne
     private User user;
@@ -89,7 +96,29 @@ public class Post {
         this.visibility = visibility;
     }
 
-    public void setLikes(int likes) {
-        this.likes = likes;
+
+
+    public boolean like(User user) {
+        if (haveLikedUsers.contains(user)) {
+            System.out.println("This user have already liked this post");
+            // false for failed like
+            return false;
+        }
+        haveLikedUsers.add(user);
+        likes += 1;
+        // true for successful like
+        return true;
+    }
+
+    public boolean unLike(User user) {
+      if (!haveLikedUsers.contains(user)) {
+          System.out.println("This user haven't liked this post");
+          // false for failed unlike
+          return false;
+      }
+      haveLikedUsers.remove(user);
+      likes -= 1;
+      // true for successful unlike
+      return true;
     }
 }
