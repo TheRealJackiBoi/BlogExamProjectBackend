@@ -19,7 +19,8 @@ public class PostRoutes {
                      get("/", postController.getPostById(), RouteRoles.USER, RouteRoles.ADMIN, RouteRoles.MANAGER);
                      delete("/", postController.deletePostById(), RouteRoles.USER, RouteRoles.ADMIN, RouteRoles.MANAGER);
                      put("/", postController.updatePostById(), RouteRoles.USER, RouteRoles.ADMIN, RouteRoles.MANAGER);
-                     put("/likes", postController.updateLikesById(), RouteRoles.USER, RouteRoles.ADMIN, RouteRoles.MANAGER);
+                     put("/like/{username}", postController.likeById(), RouteRoles.USER, RouteRoles.ADMIN, RouteRoles.MANAGER);
+                     put("/unlike/{username}", postController.unLikeById(), RouteRoles.USER, RouteRoles.ADMIN, RouteRoles.MANAGER);
                  });
                  path("/user", () -> {
                      get("/{username}", postController.getAllPostsByUsername(), RouteRoles.USER, RouteRoles.ADMIN, RouteRoles.MANAGER);
